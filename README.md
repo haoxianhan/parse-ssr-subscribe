@@ -2,6 +2,7 @@
 
 `wget -O node.txt subscribe_address`
 
+`mkdir -p ssr_config`
+
 `racket main.rkt`
 
-生成的配置在ssr_config
