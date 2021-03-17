@@ -12,11 +12,11 @@
 (define file-string (file->string ori-file-path))
 
 (define config-template (string->jsexpr
-						  (file->string "./config_template.json")))
+                          (file->string "./config_template.json")))
 
 (define (main)
   (let* ((raw-str file-string)
-		 (ssr-list (string-split (base-decode raw-str))))
-	(for-each (parse-ssr fn-generator config-template) ssr-list)))
+         (ssr-list (string-split (base-decode raw-str))))
+    (for-each (parse-ssr fn-generator config-template) ssr-list)))
 
 (main)
