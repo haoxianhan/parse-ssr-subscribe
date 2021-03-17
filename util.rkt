@@ -8,6 +8,8 @@
   cdddddr
   cadddddr
   disp
+  file-name-generator
+  write-file
   )
 
 (define (trans-+ s)
@@ -44,3 +46,17 @@
 
 (define (disp s)
   (display s)(newline))
+
+(define (file-name-generator)
+  (define count 1)
+  (define (get-file-name)
+	(let ((file-name (string-append "./ssr_config/config" (number->string count ) ".json")))
+	  (set! count (+ count 1))
+	  file-name))
+  get-file-name)
+
+(define (write-file fn-generator config)
+  (call-with-output-file (fn-generator)
+                         (lambda (out) (displayln config out))
+                         #:exists 'replace))
+

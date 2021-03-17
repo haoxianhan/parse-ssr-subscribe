@@ -1,16 +1,22 @@
 #lang racket
 
 (require
+  json
   "parse-ssr.rkt"
   "util.rkt")
 
 (define ori-file-path "./node.txt")
 
-(define proc-read
-  (lambda (in)
-	(define raw-str (read-line in))
-	(define ssr-list (string-split (base-decode raw-str)))
-	(for-each parse-ssr ssr-list)))
+(define fn-generator (file-name-generator))
 
-(call-with-input-file ori-file-path proc-read)
+(define file-string (file->string ori-file-path))
 
+(define config-template (string->jsexpr
+						  (file->string "./config_template.json")))
+
+(define (main)
+  (let* ((raw-str file-string)
+		 (ssr-list (string-split (base-decode raw-str))))
+	(for-each (parse-ssr fn-generator config-template) ssr-list)))
+
+(main)
